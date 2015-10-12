@@ -127,6 +127,8 @@ public class ForecastFragment extends Fragment {
                         .appendQueryParameter(KEY_PARAM, apiKey)
                         .build();
                 URL url = new URL(builtUri.toString());
+
+                Log.v(LOG_TAG,"Built URI: " + builtUri.toString());
                 //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=NewYork,us&mode=json&units=metric&cnt=7&appid=bd82977b86bf27fb59a04b61b657fb6f");
 
                 // Create the request to OpenWeatherMap, and open the connection
