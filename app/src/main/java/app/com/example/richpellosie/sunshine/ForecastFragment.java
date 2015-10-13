@@ -11,10 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterViewAnimator;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.text.format.Time;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,7 +70,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_main, container, false);
+        final View rootview = inflater.inflate(R.layout.fragment_main, container, false);
 
         String [] dates = {
                 "Today - Sunny - 85/64",
@@ -88,6 +90,14 @@ public class ForecastFragment extends Fragment {
                         weekForecast);
         ListView listView = (ListView) rootview.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapater);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String forecastStr = mForecastAdapater.getItem(position);
+                Toast toast = Toast.makeText(getActivity(), forecastStr, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
         //FetchWeatherTask fetcher = new FetchWeatherTask();
 
