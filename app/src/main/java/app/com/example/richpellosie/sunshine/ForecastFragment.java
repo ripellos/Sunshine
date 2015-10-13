@@ -64,6 +64,12 @@ public class ForecastFragment extends Fragment {
             fetcher.execute();
             return true;
         }
+        else if(id==R.id.action_settings)
+        {
+            Intent settingsIntent = new Intent(getActivity(),SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
