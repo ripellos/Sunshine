@@ -98,6 +98,9 @@ public class ForecastFragment extends Fragment {
     {
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
+        /*These are just helper functions to help parse through JSON
+         *This should be moved to a new class at some point
+         */
         private String getReadableDateString(long time){
             // Because the API returns a unix timestamp (measured in seconds),
             // it must be converted to milliseconds in order to be converted to valid date.
@@ -145,8 +148,6 @@ public class ForecastFragment extends Fragment {
             // current day, we're going to take advantage of that to get a nice
             // normalized UTC date for all of our weather.
 
-
-
             Time dayTime = new Time();
             dayTime.setToNow();
 
@@ -192,6 +193,7 @@ public class ForecastFragment extends Fragment {
 
         }
 
+        /*Actual AsyncTaskFunctions*/
         @Override
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
