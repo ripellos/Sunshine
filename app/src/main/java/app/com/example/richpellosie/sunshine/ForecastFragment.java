@@ -79,9 +79,9 @@ public class ForecastFragment extends Fragment {
                 "Weds - Sunny - 66/50",
                 "Thurs - Sunny - 67/51"
             };
-        ArrayList<String> weekForecast = new ArrayList<String>(Arrays.asList(dates));
+        ArrayList<String> weekForecast = new ArrayList<>(Arrays.asList(dates));
         mForecastAdapater =
-                new ArrayAdapter<String>(
+                new ArrayAdapter<>(
                         getActivity(),
                         R.layout.list_item_forecast,
                         R.id.list_item_forecast_textview,
@@ -188,11 +188,16 @@ public class ForecastFragment extends Fragment {
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
-            for (String s : resultStrs) {
-                Log.v(LOG_TAG, "Forecast entry: " + s);
-            }
             return resultStrs;
 
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            mForecastAdapater.clear();
+            for(String dayForecastStr : strings)
+                mForecastAdapater.add(dayForecastStr);
         }
 
         protected String[] doInBackground(String... params) {
@@ -229,7 +234,7 @@ public class ForecastFragment extends Fragment {
                         .build();
                 URL url = new URL(builtUri.toString());
 
-                Log.v(LOG_TAG,"Built URI: " + builtUri.toString());
+                //Log.v(LOG_TAG,"Built URI: " + builtUri.toString());
                 //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=NewYork,us&mode=json&units=metric&cnt=7&appid=bd82977b86bf27fb59a04b61b657fb6f");
 
                 // Create the request to OpenWeatherMap, and open the connection
@@ -259,7 +264,6 @@ public class ForecastFragment extends Fragment {
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
-                Log.v(LOG_TAG, forecastJsonStr);
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
