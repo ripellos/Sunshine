@@ -1,8 +1,10 @@
 package app.com.example.richpellosie.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,8 +61,10 @@ public class ForecastFragment extends Fragment {
     {
         int id = item.getItemId();
         if(id == R.id.action_refresh) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_default_value));
             FetchWeatherTask fetcher = new FetchWeatherTask();
-            fetcher.execute();
+            fetcher.execute(location);
             return true;
         }
 
@@ -223,6 +227,10 @@ public class ForecastFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String forecastJsonStr = null;
 
+            String location = "";
+            if(params.length>0)
+                location = params[0].toString();
+            Log.v(LOG_TAG, "Location value: " + location);
             String format = "json";
             String units = "metric";
             int numDays = 7;
@@ -233,14 +241,14 @@ public class ForecastFragment extends Fragment {
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
                 final String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
-                final String QUERY_PARAM = "q";
+                final String QUERY_PARAM = "zip";
                 final String FORMAT_PARAM = "mode";
                 final String UNIT_PARAM = "units";
                 final String DAYS_PARAM = "cnt";
                 final String KEY_PARAM = "appid";
 
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                        .appendQueryParameter(QUERY_PARAM, "NewYork,us")
+                        .appendQueryParameter(QUERY_PARAM, location+",us")
                         .appendQueryParameter(FORMAT_PARAM, format)
                         .appendQueryParameter(UNIT_PARAM, units)
                         .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
