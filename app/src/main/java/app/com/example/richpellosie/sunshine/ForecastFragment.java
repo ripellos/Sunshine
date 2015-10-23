@@ -44,6 +44,12 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -61,10 +67,7 @@ public class ForecastFragment extends Fragment {
     {
         int id = item.getItemId();
         if(id == R.id.action_refresh) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-            String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_default_value));
-            FetchWeatherTask fetcher = new FetchWeatherTask();
-            fetcher.execute(location);
+            updateWeather();
             return true;
         }
 
@@ -108,6 +111,14 @@ public class ForecastFragment extends Fragment {
         //FetchWeatherTask fetcher = new FetchWeatherTask();
 
         return rootview;
+    }
+
+    private void updateWeather()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_default_value));
+        FetchWeatherTask fetcher = new FetchWeatherTask();
+        fetcher.execute(location);
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]>
@@ -229,7 +240,7 @@ public class ForecastFragment extends Fragment {
 
             String location = "";
             if(params.length>0)
-                location = params[0].toString();
+                location = params[0];
             Log.v(LOG_TAG, "Location value: " + location);
             String format = "json";
             String units = "metric";
