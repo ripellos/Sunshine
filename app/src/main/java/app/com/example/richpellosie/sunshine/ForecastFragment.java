@@ -133,6 +133,15 @@ public class ForecastFragment extends Fragment {
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String unitPreference = prefs.getString("units","c");
+            if(unitPreference.equals("f"))
+            {
+                roundedHigh = roundedHigh * (9/5) + 32;
+                roundedLow = roundedLow * (9/5)+ 32;
+            }
+
+
             return  roundedHigh + "/" + roundedLow;
         }
 

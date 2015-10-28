@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Units">
+        <item>"Metric"</item>
+        <item>"Imperical"</item>
+    </string-array>
+    <string-array name="units">
+        <item>c</item>
+        <item>f</item>
+    </string-array>
+</resources>

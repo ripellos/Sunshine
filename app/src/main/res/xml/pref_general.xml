@@ -9,7 +9,13 @@
         android:defaultValue="@string/pref_default_value"
         android:singleLine="true"
         android:inputType="text">
-
     </EditTextPreference>
 
+    <ListPreference
+        android:title="Units"
+        android:key="units"
+        android:entries="@array/Units"
+        android:entryValues="@array/units"
+        android:defaultValue="c">
+    </ListPreference>
 </PreferenceScreen>
