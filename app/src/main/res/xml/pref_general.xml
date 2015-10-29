@@ -12,8 +12,9 @@
     </EditTextPreference>
 
     <ListPreference
-        android:title="Units"
+        android:title="Temperature Units"
         android:key="units"
+        android:summary="%s"
         android:entries="@array/Units"
         android:entryValues="@array/units"
         android:defaultValue="c">
