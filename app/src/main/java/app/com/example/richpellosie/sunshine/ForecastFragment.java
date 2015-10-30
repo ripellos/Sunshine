@@ -240,7 +240,7 @@ public class ForecastFragment extends Fragment {
             String location = "";
             if(params.length>0)
                 location = params[0];
-            Log.v(LOG_TAG, "Location value: " + location);
+            //Log.v(LOG_TAG, "Location value: " + location);
             String format = "json";
             String units = "metric";
             int numDays = 7;

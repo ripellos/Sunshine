@@ -1,7 +1,9 @@
 package app.com.example.richpellosie.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
         if(id==R.id.map_location)
         {
             Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-            String geoURI = "geo:0,0?q=" + "10028";
-            Uri uri = Uri.parse(geoURI);
-            mapIntent.setData(uri);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String preferredLocation = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_default_value));
+            String geoData = "geo:0,0?q=" + preferredLocation;
+            Uri geoUri = Uri.parse(geoData);
+            mapIntent.setData(geoUri);
             if(mapIntent.resolveActivity(getPackageManager())!=null)
             {
                 startActivity(mapIntent);
