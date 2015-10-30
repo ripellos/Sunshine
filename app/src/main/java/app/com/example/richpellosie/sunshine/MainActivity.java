@@ -1,10 +1,13 @@
 package app.com.example.richpellosie.sunshine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
             Intent settingsIntent = new Intent(this,SettingsActivity.class);
             startActivity(settingsIntent);
             return true;
+        }
+        if(id==R.id.map_location)
+        {
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+            String geoURI = "geo:0,0?q=" + "10028";
+            Uri uri = Uri.parse(geoURI);
+            mapIntent.setData(uri);
+            if(mapIntent.resolveActivity(getPackageManager())!=null)
+            {
+                startActivity(mapIntent);
+            }
         }
 
         return super.onOptionsItemSelected(item);
