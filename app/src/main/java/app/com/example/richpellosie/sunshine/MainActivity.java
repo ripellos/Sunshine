@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
             Intent mapIntent = new Intent(Intent.ACTION_VIEW);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String preferredLocation = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_default_value));
-            String geoData = "geo:0,0?q=" + preferredLocation;
-            Uri geoUri = Uri.parse(geoData);
+            Uri geoUri = Uri.parse("geo:0,0?").buildUpon()
+                    .appendQueryParameter("q",preferredLocation)
+                    .build();
             mapIntent.setData(geoUri);
             if(mapIntent.resolveActivity(getPackageManager())!=null)
             {
